@@ -10,7 +10,6 @@ import datetime
 import math
 
 SERVER='1'
-INPUT_FILE_PATH_NAME = '/home/ec2-user/scripts/input/domain_'+SERVER+'.csv'
 INPUT_FILE_PATH_NAME_NEW = '/home/ec2-user/scripts/input/domain_'+SERVER+'_v2.csv'
 FILE_PATH_NAME_TMP= '/home/ec2-user/scripts/output/domain_output_'+SERVER+'.csv'
 CHUNCK_SIZE=30
@@ -84,12 +83,6 @@ def process_(df):
 if __name__ == "__main__":
     start_db_write = datetime.datetime.now()
     print('Script starts here ....', start_db_write)
-    df_i = pd.read_csv(INPUT_FILE_PATH_NAME, index_col=False)
-    df_o = pd.read_csv(FILE_PATH_NAME_TMP, index_col=False)
-    print(df_i.shape, df_o.shape)
-    df_ = df_i[~df_i['bq_organization_website_domain'].isin(df_o['domain'].unique())]
-    print(df_.shape)
-    df_.to_csv(INPUT_FILE_PATH_NAME_NEW, index=False)
     main()
     end_db_write = datetime.datetime.now()
     print(f'\nTime taken to complete : {(end_db_write-start_db_write).seconds} seconds')
